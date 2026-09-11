@@ -5,7 +5,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 
-// Nguồn: roiser-html-package/roiser/index.html, <section class="category-section"> (dòng 264-329)
+// Nguồn: roiser-html-package/roiser/index.html, <section class="category-section"> (dòng 264-330)
+// Config swiper nguồn: roiser-html-package/roiser/assets/js/main.js, swiperCategory (dòng 212-259)
 const categories = [
   { title: "Women Wear", image: "/assets/img/images/cate-1.png" },
   { title: "Shoes Collection", image: "/assets/img/images/cate-2.png" },
@@ -15,7 +16,7 @@ const categories = [
   { title: "Sunglasses", image: "/assets/img/images/cate-6.png" },
 ];
 
-export default function Category() {
+export default function CategorySection() {
   return (
     <section className="category-section pt-100 pb-100">
       <div className="container">

@@ -1,11 +1,11 @@
 import Hero from "@/components/home/Hero";
-import Category from "@/components/home/Category";
+import CategorySection from "@/components/home/CategorySection";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Category />
+      <CategorySection />
     </>
   );
 }
