@@ -1,0 +1,10 @@
+/* Sửa xung đột giữa Tailwind preflight và CSS vendor của template — KHÔNG sửa main.css gốc.
+   Tailwind preflight (app/globals.css: @import "tailwindcss") đặt border-style: solid mặc
+   định cho mọi phần tử/pseudo-element. main.css dòng 2871-2889 (.select-control:after ở
+   top-bar) dùng border-width: 1px (shorthand, set cả 4 cạnh) chỉ để đổi màu/kích thước 2
+   cạnh dưới-phải của mũi tên nice-select — vô tình kích hoạt luôn 2 cạnh trên-trái (đáng lẽ
+   phải ẩn theo mặc định browser là border-style: none), biến hình chevron thành hình thoi. */
+.header .top-bar .top-bar-inner .top-bar-right .top-right-list li .select-control:after {
+  border-top-style: none;
+  border-left-style: none;
+}

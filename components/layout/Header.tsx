@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import NiceSelect from "@/components/ui/NiceSelect";
 
 // Nguồn: roiser-html-package/roiser/assets/js/main.js
 // $(".mobile-menu-items").meanmenu({ meanScreenWidth: "992", ... }) (dòng ~88-94)
@@ -212,26 +213,28 @@ export default function Header() {
                 <ul className="top-right-list">
                   <li><a href="contact.html">Store Location</a></li>
                   <li>
-                    <div className="nice-select select-control country" tabIndex={0}>
-                      <span className="current">Language</span>
-                      <ul className="list">
-                        <li data-value="" className="option selected focus">Language</li>
-                        <li data-value="vdt" className="option">English</li>
-                        <li data-value="can" className="option">Bangla</li>
-                        <li data-value="uk" className="option">Arabic</li>
-                      </ul>
-                    </div>
+                    <NiceSelect
+                      className="select-control country"
+                      defaultValue=""
+                      options={[
+                        { value: "", label: "Language" },
+                        { value: "vdt", label: "English" },
+                        { value: "can", label: "Bangla" },
+                        { value: "uk", label: "Arabic" },
+                      ]}
+                    />
                   </li>
                   <li>
-                    <div className="nice-select select-control select-2 country" tabIndex={0}>
-                      <span className="current">Currency</span>
-                      <ul className="list">
-                        <li data-value="" className="option selected focus">Currency</li>
-                        <li data-value="vdt" className="option">Doller</li>
-                        <li data-value="can" className="option">Rupee</li>
-                        <li data-value="uk" className="option">Taka</li>
-                      </ul>
-                    </div>
+                    <NiceSelect
+                      className="select-control select-2 country"
+                      defaultValue=""
+                      options={[
+                        { value: "", label: "Currency" },
+                        { value: "vdt", label: "Doller" },
+                        { value: "can", label: "Rupee" },
+                        { value: "uk", label: "Taka" },
+                      ]}
+                    />
                   </li>
                 </ul>
               </div>
@@ -248,15 +251,16 @@ export default function Header() {
                   </a>
                 </div>
                 <div className="category-form-wrap">
-                  <div className="nice-select select-control country" tabIndex={0}>
-                    <span className="current">ALL Categories</span>
-                    <ul className="list">
-                      <li data-value="" className="option selected focus">ALL Categories</li>
-                      <li data-value="vdt" className="option">Fashion</li>
-                      <li data-value="can" className="option">Organic</li>
-                      <li data-value="uk" className="option">Furniture</li>
-                    </ul>
-                  </div>
+                  <NiceSelect
+                    className="select-control country"
+                    defaultValue=""
+                    options={[
+                      { value: "", label: "ALL Categories" },
+                      { value: "vdt", label: "Fashion" },
+                      { value: "can", label: "Organic" },
+                      { value: "uk", label: "Furniture" },
+                    ]}
+                  />
                   <form className="header-form" action="mail.php">
                     <input className="form-control" type="text" name="search" placeholder="Search here..." />
                     <button className="submit rr-primary-btn">Search here</button>
