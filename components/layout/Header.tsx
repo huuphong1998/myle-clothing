@@ -45,7 +45,7 @@ const navItems: NavItem[] = [
       { label: "Shop Grid", href: "shop-grid.html" },
       { label: "Shop Details", href: "shop-details.html" },
       { label: "Cart", href: "/cart" },
-      { label: "Wishlist", href: "wishlist.html" },
+      { label: "Wishlist", href: "/wishlist" },
       { label: "Checkout", href: "/checkout" },
     ],
   },
@@ -202,7 +202,7 @@ export default function Header() {
                 <ul className="top-left-list">
                   <li><a href="about.html">About</a></li>
                   <li><a href="contact.html">My Account</a></li>
-                  <li><a href="wishlist.html">Wishlist</a></li>
+                  <li><a href="/wishlist">Wishlist</a></li>
                   <li><a href="/checkout">Checkout</a></li>
                 </ul>
               </div>
@@ -279,7 +279,7 @@ export default function Header() {
                     </a>
                   </li>
                   <li>
-                    <a href="wishlist.html" className="icon">
+                    <a href="/wishlist" className="icon">
                       <i className="fa-sharp fa-regular fa-heart" />
                     </a>
                   </li>
