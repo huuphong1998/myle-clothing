@@ -66,7 +66,7 @@ function ProductCard({ product, listView }: { product: ShopProduct; listView?: b
             </a>
           </li>
           <li>
-            <a href="wishlist.html">
+            <a href="/wishlist">
               <i className="fa-light fa-heart"></i>
             </a>
           </li>
