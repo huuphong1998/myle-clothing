@@ -140,8 +140,9 @@ tảng POD trung gian như Printful/Printify).
 - **addresses**: id, user_id, full_name, address_line, city, state, country, zip_code,
   is_default.
 - **categories**: id, name, slug.
-- **products**: id, category_id, name, slug, description, base_price, images[],
-  status (active/draft), created_at.
+- **products**: id, category_id, name, slug, description, base_price, sale_price
+  (nullable — giá sau giảm, hiển thị kèm base_price gạch ngang khi có; theo UI mẫu
+  shop.html/shop-details.html), images[], status (active/draft), created_at.
 - **product_variants**: id, product_id, size, color, sku, price, stock_quantity, image.
 - **cart_items**: id, user_id, product_variant_id, quantity, created_at.
 - **wishlist_items**: id, user_id, product_id, created_at.
