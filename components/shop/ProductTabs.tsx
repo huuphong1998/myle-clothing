@@ -3,13 +3,16 @@
 import { useState } from "react";
 
 // Nguồn: roiser-html-package/roiser/shop-details.html, <section class="product-description pb-100">
-// (dòng 361-523). Nội dung mô tả/bảng size/review là text tĩnh dùng chung cho mọi sản phẩm
-// trong template gốc (chỉ có đúng 1 trang shop-details.html cho toàn site) — giữ nguyên y hệt.
+// (dòng 361-523). Bảng size/review vẫn là text tĩnh dùng chung cho mọi sản phẩm (không có dữ
+// liệu tương ứng trong Supabase — bảng reviews thuộc backlog task 1.2 chưa làm). Riêng đoạn mô
+// tả: dùng products.description thật khi có (cột này đã tồn tại trong Supabase), fallback về
+// đúng 2 đoạn lorem gốc của template khi sản phẩm chưa có description (hầu hết sản phẩm seed
+// hiện tại — chỉ "Poncho Sweater International" có description thật).
 // Bootstrap tab JS (data-bs-toggle="tab") không được nạp trong app này nên build lại bằng
 // React state, giống cách ShopSection xử lý tab grid/list.
 type TabKey = "description" | "additional" | "reviews";
 
-export default function ProductTabs() {
+export default function ProductTabs({ description }: { description: string | null }) {
   const [activeTab, setActiveTab] = useState<TabKey>("description");
 
   return (
@@ -55,20 +58,26 @@ export default function ProductTabs() {
             <div className="tab-pane fade show active description">
               <div className="desc-wrap">
                 <div className="left-content">
-                  <p className="mb-30">
-                    Credibly negotiate emerging materials whereas clicks-and-mortar intellectual capital.
-                    Compellingly whiteboard client-centric sourcescross-platform schemas. Distinctively develop
-                    future-proof outsourcing without multimedia based portals. Progressively coordinate generation
-                    architectures for collaborative solutions. Professionally restore backward-compatible quality
-                    vectors before customer directed metrics. Holisticly restore technically sound internal or
-                    &quot;organic&quot; sources before client-centered human capital underwhelm holistic mindshare
-                    for prospective innovation.
-                  </p>
-                  <p className="mb-0">
-                    Seamlessly target fully tested infrastructures whereas just in time process improvements.
-                    Dynamically exploit team driven functionalities vis a vis global total linkage redibly synthesize
-                    just in time technology rather than open-source strategic theme areas.
-                  </p>
+                  {description ? (
+                    <p className="mb-0">{description}</p>
+                  ) : (
+                    <>
+                      <p className="mb-30">
+                        Credibly negotiate emerging materials whereas clicks-and-mortar intellectual capital.
+                        Compellingly whiteboard client-centric sourcescross-platform schemas. Distinctively develop
+                        future-proof outsourcing without multimedia based portals. Progressively coordinate generation
+                        architectures for collaborative solutions. Professionally restore backward-compatible quality
+                        vectors before customer directed metrics. Holisticly restore technically sound internal or
+                        &quot;organic&quot; sources before client-centered human capital underwhelm holistic mindshare
+                        for prospective innovation.
+                      </p>
+                      <p className="mb-0">
+                        Seamlessly target fully tested infrastructures whereas just in time process improvements.
+                        Dynamically exploit team driven functionalities vis a vis global total linkage redibly
+                        synthesize just in time technology rather than open-source strategic theme areas.
+                      </p>
+                    </>
+                  )}
                 </div>
                 <div className="right-content">
                   <img src="/assets/img/shop/shop-details-img.jpg" alt="" />

@@ -10,22 +10,11 @@ import "swiper/css";
 // Nguồn: roiser-html-package/roiser/shop-details.html, <div class="product-slider-wrap">
 // (dòng 266-308). Config Swiper y hệt main.js dòng 349-368 (swiper = product-gallary-thumb,
 // swiper2 = product-gallary, liên kết qua thumbs: { swiper }).
-// Ghi chú nguồn thiếu file: shop-slider-2.jpg và shop-slider-3.jpg không tồn tại trong
-// roiser-html-package (chỉ có shop-slider-1.jpg) — giống lỗ hổng ảnh đã ghi nhận trước đây,
-// nên dùng lại đúng ảnh thật shop-slider-1.jpg cho cả 3 slide thay vì bịa ảnh mới.
-const galleryImages = [
-  "/assets/img/shop/shop-slider-1.jpg",
-  "/assets/img/shop/shop-slider-1.jpg",
-  "/assets/img/shop/shop-slider-1.jpg",
-];
-
-const thumbImages = [
-  "/assets/img/shop/shop-thumb-1.png",
-  "/assets/img/shop/shop-thumb-2.png",
-  "/assets/img/shop/shop-thumb-3.png",
-];
-
-export default function ProductGallery() {
+// Ảnh lấy từ products.images thật trong Supabase (mỗi sản phẩm hiện chỉ có 1 ảnh thật trong
+// mảng images — không dùng lại bộ ảnh demo dùng chung shop-slider-*/shop-thumb-* của template
+// nữa, vì giờ mỗi sản phẩm đã có ảnh thật riêng; xem thêm memory roiser-template-asset-gaps
+// về lý do trước đây phải dùng ảnh demo dùng chung).
+export default function ProductGallery({ images }: { images: string[] }) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
 
   return (
@@ -40,7 +29,7 @@ export default function ProductGallery() {
         watchSlidesProgress
         className="swiper product-gallary-thumb"
       >
-        {thumbImages.map((src, index) => (
+        {images.map((src, index) => (
           <SwiperSlide key={src + index}>
             <div className="thumb-item">
               <Image src={src} alt="shop" width={112} height={112} />
@@ -60,7 +49,7 @@ export default function ProductGallery() {
         className="swiper product-gallary"
       >
         <span className="sale">Sale</span>
-        {galleryImages.map((src, index) => (
+        {images.map((src, index) => (
           <SwiperSlide key={src + index}>
             <div className="gallary-item">
               <Image src={src} alt="shop" width={600} height={713} />

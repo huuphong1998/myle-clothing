@@ -1,17 +1,21 @@
 import { notFound } from "next/navigation";
 import ProductGallery from "@/components/shop/ProductGallery";
 import ProductTabs from "@/components/shop/ProductTabs";
-import { getProductBySlug, products } from "@/lib/data/products";
+import { getProductDetailBySlug } from "@/lib/supabase/products";
 
 // Nguồn: roiser-html-package/roiser/shop-details.html.
 // page-header dòng 241-260; row gallery/product-info dòng 262-358 (ProductGallery + phần info
 // dưới đây); mô tả/tab dòng 361-523 (ProductTabs).
-// Slug tự đặt (kebab-case theo tên sản phẩm) vì template gốc không có khái niệm slug — mọi link
-// "Shop Details" trong site đều trỏ thẳng tới đúng 1 file shop-details.html tĩnh.
-// CHƯA nối Supabase — dữ liệu lấy từ lib/data/products.ts (dùng chung với /shop).
+// Slug tự đặt (kebab-case theo tên sản phẩm, cột products.slug) vì template gốc không có khái
+// niệm slug — mọi link "Shop Details" trong site đều trỏ thẳng tới đúng 1 file shop-details.html
+// tĩnh. Server Component: fetch trực tiếp từ Supabase (anon key qua @supabase/ssr) theo slug,
+// không dùng generateStaticParams tĩnh nữa vì catalog có thể đổi độc lập với lần deploy.
+// rating (luôn 5 sao) là hằng số hiển thị giống hệt shop-grid.html, không có cột tương ứng
+// trong DB (chưa có bảng reviews — backlog task 1.2).
+const DISPLAY_RATING = 5;
 
-export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }));
+function formatPrice(value: number) {
+  return `$${value.toFixed(2)}`;
 }
 
 export default async function ShopDetailsPage({
@@ -20,7 +24,7 @@ export default async function ShopDetailsPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductDetailBySlug(slug);
 
   if (!product) {
     notFound();
@@ -56,7 +60,7 @@ export default async function ShopDetailsPage({
         <div className="container">
           <div className="row">
             <div className="col-lg-6 product-details-wrap">
-              <ProductGallery />
+              <ProductGallery images={product.images} />
             </div>
             <div className="col-lg-6">
               <div className="product-details">
@@ -66,7 +70,7 @@ export default async function ShopDetailsPage({
                     <h3 className="title">{product.title}</h3>
                     <div className="rating-wrap">
                       <ul className="rating">
-                        {Array.from({ length: product.rating }).map((_, index) => (
+                        {Array.from({ length: DISPLAY_RATING }).map((_, index) => (
                           <li key={index}>
                             <i className="fa-sharp fa-solid fa-star"></i>
                           </li>
@@ -75,7 +79,8 @@ export default async function ShopDetailsPage({
                       <span>(1 customer review)</span>
                     </div>
                     <h4 className="price">
-                      {product.price} <span>{product.offerPrice}</span>
+                      {formatPrice(product.salePrice ?? product.basePrice)}{" "}
+                      {product.salePrice !== null && <span>{formatPrice(product.basePrice)}</span>}
                     </h4>
                     <div className="product-desc-wrap">
                       <p className="desc">
@@ -87,7 +92,7 @@ export default async function ShopDetailsPage({
                       </span>
                     </div>
                     <div className="item-left-line">
-                      <span>Only 15 items left in stock!</span>
+                      <span>Only {product.stockQuantity} items left in stock!</span>
                       <div className="line"></div>
                     </div>
                     <ul className="details-list">
@@ -133,7 +138,7 @@ export default async function ShopDetailsPage({
         </div>
       </section>
 
-      <ProductTabs />
+      <ProductTabs description={product.description} />
     </>
   );
 }

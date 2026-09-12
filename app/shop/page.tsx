@@ -1,8 +1,13 @@
 import ShopSection from "@/components/shop/ShopSection";
+import { getShopProducts } from "@/lib/supabase/products";
 
 // Nguồn page-header: roiser-html-package/roiser/shop.html dòng 241-260.
 // Nội dung grid/sidebar bên dưới lấy từ shop-grid.html (xem components/shop/ShopSection.tsx).
-export default function ShopPage() {
+// Server Component: fetch trực tiếp từ Supabase (anon key qua @supabase/ssr, RLS cho đọc công
+// khai) — không còn dùng mảng mock, không lộ service role key ra client.
+export default async function ShopPage() {
+  const products = await getShopProducts();
+
   return (
     <>
       <section className="page-header">
@@ -28,7 +33,7 @@ export default function ShopPage() {
           </div>
         </div>
       </section>
-      <ShopSection />
+      <ShopSection products={products} />
     </>
   );
 }

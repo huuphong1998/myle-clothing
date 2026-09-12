@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import NiceSelect from "@/components/ui/NiceSelect";
-import { products } from "@/lib/data/products";
+import type { ShopProduct } from "@/lib/supabase/products";
 
 // Nguồn: roiser-html-package/roiser/shop-grid.html, <section class="shop-grid pt-100 pb-100">
 // (dòng 262-1012) — sidebar filter categories/giá/size/brand lấy từ đây theo lựa chọn gộp
@@ -40,13 +40,25 @@ const sidebarPicks = [
   { image: "/assets/img/shop/sidebar-img-3.png", title: "Black Flower Sandal", offerPrice: "$450.00", price: "$257.00" },
 ];
 
-function ProductCard({ product, listView }: { product: (typeof products)[number]; listView?: boolean }) {
+// rating/reviews/badge "New" không có cột tương ứng trong bảng products (chưa có bảng reviews —
+// backlog task 1.2) — nguồn shop.html/shop-grid.html cũng hard-code đúng 3 giá trị này giống hệt
+// nhau cho MỌI sản phẩm (luôn 5 sao, luôn "(15 Reviews)", luôn badge "New"), nên giữ nguyên làm
+// hằng số hiển thị thay vì bịa dữ liệu mới.
+const DISPLAY_RATING = 5;
+const DISPLAY_REVIEWS = "(15 Reviews)";
+const DISPLAY_SALE_BADGE = "New";
+
+function formatPrice(value: number) {
+  return `$${value.toFixed(2)}`;
+}
+
+function ProductCard({ product, listView }: { product: ShopProduct; listView?: boolean }) {
   return (
     <div className={`shop-item${listView ? " grid-shop" : ""}`}>
       <div className="shop-thumb">
         <div className="overlay"></div>
         <Image src={product.image} alt="shop" fill />
-        <span className="sale">{product.sale}</span>
+        <span className="sale">{DISPLAY_SALE_BADGE}</span>
         <ul className="shop-list">
           <li>
             <a href="cart.html">
@@ -75,25 +87,25 @@ function ProductCard({ product, listView }: { product: (typeof products)[number]
         )}
         <div className="review-wrap">
           <ul className="review">
-            {Array.from({ length: product.rating }).map((_, index) => (
+            {Array.from({ length: DISPLAY_RATING }).map((_, index) => (
               <li key={index}>
                 <i className="fa-solid fa-star"></i>
               </li>
             ))}
           </ul>
-          <span>{product.reviews}</span>
+          <span>{DISPLAY_REVIEWS}</span>
         </div>
         <span className="price">
           {" "}
-          <span className="offer">{product.offerPrice}</span>
-          {product.price}
+          {product.salePrice !== null && <span className="offer">{formatPrice(product.basePrice)}</span>}
+          {formatPrice(product.salePrice ?? product.basePrice)}
         </span>
       </div>
     </div>
   );
 }
 
-export default function ShopSection() {
+export default function ShopSection({ products }: { products: ShopProduct[] }) {
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   // Nguồn main.js dòng 392-398: priceRange mặc định value=300, priceOutput hiển thị số đó.
   const [priceValue, setPriceValue] = useState(300);
