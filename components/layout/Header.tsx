@@ -46,7 +46,7 @@ const navItems: NavItem[] = [
       { label: "Shop Details", href: "shop-details.html" },
       { label: "Cart", href: "/cart" },
       { label: "Wishlist", href: "wishlist.html" },
-      { label: "Checkout", href: "checkout.html" },
+      { label: "Checkout", href: "/checkout" },
     ],
   },
   { label: "Women", href: "shop-grid.html" },
@@ -203,7 +203,7 @@ export default function Header() {
                   <li><a href="about.html">About</a></li>
                   <li><a href="contact.html">My Account</a></li>
                   <li><a href="wishlist.html">Wishlist</a></li>
-                  <li><a href="checkout.html">Checkout</a></li>
+                  <li><a href="/checkout">Checkout</a></li>
                 </ul>
               </div>
               <div className="top-bar-middle">
