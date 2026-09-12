@@ -19,3 +19,8 @@
 - Không hardcode API key/secret — luôn đọc từ .env.
 - Không thêm thư viện ngoài kế hoạch mà không hỏi trước.
 - Mọi API route xử lý đơn hàng/thanh toán phải validate dữ liệu ở backend.
+
+## Quy tắc database migration
+- Chỉ được chạy `supabase db push` hoặc bất kỳ lệnh migration nào nhắm vào project DEV.
+- KHÔNG được tự ý link/push lên project PROD dưới bất kỳ hoàn cảnh nào.
+- Nếu cần thay đổi schema trên PROD, dừng lại và báo tôi để tôi tự chạy tay.
