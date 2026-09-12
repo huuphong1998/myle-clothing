@@ -39,9 +39,9 @@ const navItems: NavItem[] = [
   },
   {
     label: "Shop",
-    href: "shop.html",
+    href: "/shop",
     children: [
-      { label: "Shop", href: "shop.html" },
+      { label: "Shop", href: "/shop" },
       { label: "Shop Grid", href: "shop-grid.html" },
       { label: "Shop Details", href: "shop-details.html" },
       { label: "Cart", href: "cart.html" },
