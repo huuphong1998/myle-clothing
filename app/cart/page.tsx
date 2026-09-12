@@ -160,7 +160,7 @@ export default function CartPage() {
                 </div>
               </div>
               <div className="checkout-proceed">
-                <a href="checkout.html" className="rr-primary-btn checkout-btn">
+                <a href="/checkout" className="rr-primary-btn checkout-btn">
                   Proceed to Checkout
                 </a>
               </div>
