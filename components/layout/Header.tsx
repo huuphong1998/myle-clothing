@@ -56,7 +56,7 @@ const navItems: NavItem[] = [
     href: "#",
     children: [
       { label: "About", href: "about.html" },
-      { label: "Login", href: "login.html" },
+      { label: "Login", href: "/login" },
       { label: "Register", href: "register.html" },
       { label: "Faq", href: "faq.html" },
       { label: "404 Error", href: "error.html" },
